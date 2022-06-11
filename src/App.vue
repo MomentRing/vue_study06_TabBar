@@ -1,28 +1,70 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <MyHeader
+      :title="'tabbar案例'"
+      :color="'white'"
+      :background="'skyblue'"
+    ></MyHeader>
+    <div class="main">
+      <keep-alive>
+        <Component :is="comName"></Component>
+      </keep-alive>
+    </div>
+    <MyTabBar :arr="tabList" @changeCom="comFn"></MyTabBar>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import MyHeader from './components/MyHeader.vue'
+import MyTabBar from './components/MyTabBar.vue'
+import MyGoodsList from './components/views/MyGoodsList.vue'
+import MyGoodsSearch from './components/views/MyGoodsSearch.vue'
+import MyUserInfo from './components/views/MyUserInfo.vue'
 export default {
-  name: 'App',
+  created() {},
+  data() {
+    return {
+      tabList: [
+        {
+          iconText: 'icon-shangpinliebiao',
+          text: '商品列表',
+          componentName: 'MyGoodsList',
+        },
+        {
+          iconText: 'icon-sousuo',
+          text: '商品搜索',
+          componentName: 'MyGoodsSearch',
+        },
+        {
+          iconText: 'icon-user',
+          text: '我的信息',
+          componentName: 'MyUserInfo',
+        },
+      ],
+      comName: 'MyGoodsList',
+    }
+  },
+  methods: {
+    comFn(cn) {
+      this.comName = cn
+    },
+  },
+  computed: {},
+  watch: {},
+  filters: {},
   components: {
-    HelloWorld
-  }
+    MyHeader,
+    MyTabBar,
+    MyGoodsList,
+    MyGoodsSearch,
+    MyUserInfo,
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+.main {
+  padding-top: 45px;
+  padding-bottom: 51px;
 }
 </style>
